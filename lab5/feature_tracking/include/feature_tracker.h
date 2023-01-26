@@ -1,13 +1,13 @@
 #pragma once
 
-#include "feature_tracker.h"
 #include <vector>
+#include "feature_tracker.h"
 
 #include <opencv2/core.hpp>
 #include <opencv2/xfeatures2d.hpp>
 
 class FeatureTracker {
-public:
+ public:
   FeatureTracker() = default;
 
   virtual ~FeatureTracker() = default;
@@ -16,16 +16,19 @@ public:
    * This function receives a pair of images and tracks features from one image
    * to the other.
     @param[in] img_1, img_2 Images where to track features.
-    @param[out] matched_kp_1_kp_2 pair of vectors of keypoints with the same size
-    so that matched_kp_1_kp_2.first[i] matches with matched_kp_1_kp_2.second[i].
+    @param[out] matched_kp_1_kp_2 pair of vectors of keypoints with the same
+   size so that matched_kp_1_kp_2.first[i] matches with
+   matched_kp_1_kp_2.second[i].
   */
-  void trackFeatures(const cv::Mat& img_1, const cv::Mat& img_2,
-                     std::pair<std::vector<cv::KeyPoint>,
-                               std::vector<cv::KeyPoint>>* matched_kp_1_kp_2 = nullptr);
+  void trackFeatures(
+      const cv::Mat& img_1,
+      const cv::Mat& img_2,
+      std::pair<std::vector<cv::KeyPoint>, std::vector<cv::KeyPoint>>*
+          matched_kp_1_kp_2 = nullptr);
 
   void printStats() const;
 
-protected:
+ protected:
   /**
     @param[in] img Image input where to detect keypoints.
     @param[out] keypoints List of keypoints detected on the given image.
@@ -67,13 +70,14 @@ protected:
                              const std::vector<cv::KeyPoint>& keypoints_2,
                              std::vector<uchar>* inlier_mask) const;
 
-  void drawMatches(const cv::Mat& img_1, const cv::Mat& img_2,
+  void drawMatches(const cv::Mat& img_1,
+                   const cv::Mat& img_2,
                    const std::vector<cv::KeyPoint>& keypoints_1,
                    const std::vector<cv::KeyPoint>& keypoints_2,
                    const std::vector<std::vector<cv::DMatch>>& matches);
 
-private:
-  //Statistics
+ private:
+  // Statistics
   float avg_num_keypoints_img1_ = 0;
   float avg_num_keypoints_img2_ = 0;
   float avg_num_matches_ = 0;
